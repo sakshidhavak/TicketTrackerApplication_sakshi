@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+
+<title>Ticket Tracker Application</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+
+</head>
+<style> 
+
+   body {
+  background-color:gray;
+}
+   
+
+.centered-card {
+   
+	margin: auto; /* Center horizontally */
+	margin-top: 100px; /* Adjust vertical position */
+}
+
+.nav{
+align-content:center;
+padding: 15px
+
+}
+
+.header{
+align-content: center;
+margin-left: 50px
+}
+
+</style>
+
+
+</head>
+<div th:replace = "/header :: header" ></div>
+
+<body>
+
+<div th:replace = "/header :: navbar" ></div>
+  
+	<div class="container">
+		<div class="row">
+				<div class="card centered-card">
+					<div class="card-body">
+
+
+						<div class="card-header mb-8">List of Products</div>
+						<div class="row">
+							<div class="col-lg-3">
+								<a th:href="@{/newTicket}" class="btn btn-primary btn-sm mb-3">Add
+									New Ticket</a>
+								<form th:action="@{/search}">
+    <input type="text" name="query" id="query" size="50" th:value="${query}" required />
+    &nbsp;
+    <input type="submit" value="Search" />
+    &nbsp;
+</form>
+   
+							</div>
+						</div>
+						
+						<table class="table table-striped table-dark">
+							<thead>
+								<tr>
+									<th>S_No</th>
+									<th>Ticket title</th>
+									<th>Ticket Description</th>
+									
+									<th>Creation time</th>
+								
+									<th>Actions</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr th:each="var, counter  :  ${ticketsAttribute}">
+									<td th:text="${counter.count}"></td>
+									<td th:text="${var.ticketTitle}"></td>
+									<td th:text="${var.ticketShortDescription}"></td>
+									
+									<td th:text="${var.createdOn}"></td>
+								
+									<td><a th:href="@{/tickets/edit/{id}(id=${var.id})}"
+										class="btn btn-warning">Update</a> <a
+										th:href="@{/tickets/delete/{id}(id=${var.id})}"
+										class="btn btn-danger">Delete</a>
+										<a th:href="@{/view/{id}(id=${var.id})}" class = "btn btn-info">View</a>
+										
+</td>
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace ="/footer :: footer"></div>
+	
+</body>
+
+
+
+</html>
